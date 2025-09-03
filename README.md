@@ -1,4 +1,5 @@
 # Exploring the Potential of Unsupervised Representations of IR Satellite Images for Typhoon Forecasting 
+Repository for the paper **Machine Learning for the Digital Typhoon Dataset: Extensions to Multiple Basins and New Developments in Representations and Tasks** available at https://arxiv.org/abs/2411.16421. 
 
 ### Dependencies
 PyPhoon2: https://github.com/kitamoto-lab/pyphoon2

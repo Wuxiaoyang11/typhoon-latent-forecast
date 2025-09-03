@@ -6,7 +6,7 @@ import torchvision.transforms as T
 from lib.models.feature_extractors import get_resnet18, get_moco_encoder
 from lib.utils.preprocessing import preprocess_images_sequences
 
-
+# 改变图像通道数
 class To3Channels(nn.Module):
 
     def __init__(self,):
@@ -18,10 +18,11 @@ def main():
     # Base transforms for MoCo encoders
     transforms = T.Compose([
         T.ToTensor(),
+        # 裁剪图像为224*224
         T.CenterCrop(224),
         #To3Channels(),
     ])
-
+    # 定义单张图像处理逻辑
     def transform_func(img):
         # APPLIED TO ALL IMAGES IN THE SEQUENCE AT ONCE
         img_range = [150, 350]
