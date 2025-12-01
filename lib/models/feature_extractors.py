@@ -11,8 +11,8 @@ from torchvision.models.resnet import (
 )
 from torchvision.models.vgg import VGG11_BN_Weights, vgg11_bn
 
-from lib.models.networks.simple_cnn import SimpleCNN
-from lib.models.networks.vision_transformer import vit_base, vit_small, vit_tiny
+# from lib.models.networks.simple_cnn import SimpleCNN
+# from lib.models.networks.vision_transformer import vit_base, vit_small, vit_tiny
 from lib.models.siamese_ema import SiameseEMA
 
 ssl._create_default_https_context = ssl._create_unverified_context
