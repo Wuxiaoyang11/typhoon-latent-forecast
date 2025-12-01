@@ -88,7 +88,12 @@ class BaseTrainer:
 
 
     def _save_checkpoint(self, name=None):
-        model_dict = self.model.state_dict()
+        # For MoCo, we only save the backbone encoder
+        if "moco" in self.name:
+            model_dict = self.model.encoder_q[0].state_dict()
+        else:
+            model_dict = self.model.state_dict()
+
 
         data = dict(
             model_dict=model_dict,
