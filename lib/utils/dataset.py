@@ -155,7 +155,7 @@ class SequenceTyphoonDataset(DigitalTyphoonDataset):
                  preprocessed_path=None,  # 预处理图像特征的路径
                  latent_dim=None,  # 图像特征的维度
                  pred_diff=False,  # 是否预测与最后一个输入值的差值
-                 prefix="/fs9/datasets/typhoon-202404/wnp",
+                 prefix="/home/wxy/dataset/WP",
                  spectrum="Infrared",
                  load_data_into_memory=False,
                  ignore_list=None,

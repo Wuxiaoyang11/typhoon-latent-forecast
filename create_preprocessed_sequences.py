@@ -35,7 +35,7 @@ def main():
     model = get_moco_encoder("resnet34", "weights/moco_sequence/moco_r34_w6_projector/checkpoint_10000.pth")
     print(f"Encoder ready, model with {sum(p.numel() for p in model.parameters()):,} parameters")
 
-    dataset_path =  "/fs9/datasets/typhoon-202404/wnp"
+    dataset_path =  "/home/wxy/dataset/WP"
 
     preprocess_images_sequences(model,
                                 "r34p_10k_w6",
