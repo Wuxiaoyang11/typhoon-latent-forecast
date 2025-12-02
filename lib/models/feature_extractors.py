@@ -11,8 +11,6 @@ from torchvision.models.resnet import (
 )
 from torchvision.models.vgg import VGG11_BN_Weights, vgg11_bn
 
-# from lib.models.networks.simple_cnn import SimpleCNN
-# from lib.models.networks.vision_transformer import vit_base, vit_small, vit_tiny
 from lib.models.siamese_ema import SiameseEMA
 
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -51,7 +49,7 @@ def get_resnet18_3channels():
 def get_moco_encoder(backbone: str, weights: str, dataparallel=False):
     model = SiameseEMA(
             base_encoder=get_feature_extractor(backbone),
-            out_dim=384 if backbone == "vit_small" else 512,
+            out_dim=512,
     )
     if dataparallel:
         model = nn.DataParallel(model)
@@ -87,15 +85,11 @@ def get_resnet50():
 
 def get_vgg11():
     model = vgg11_bn(weights=VGG11_BN_Weights.DEFAULT)
-    #print(model.classifier[-1])
     del model.classifier[-1]
     return _wrap_model_1to3channels(model)
 
 
 _feature_extractors = dict(
-    vit_tiny=vit_tiny,
-    vit_small=vit_small,
-    vit_base=vit_base,
     resnet18=get_resnet18,
     resnet18_3c=get_resnet18_3channels,
     resnet34=get_resnet34,
