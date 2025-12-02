@@ -16,9 +16,9 @@ from lib.utils.dataset import (
 from lib.utils.dataset import SequenceTyphoonDataset as STD
 from lib.utils.fisheye import FishEye
 
-IMAGE_DIR="/fs9/gaspar/data/WP/image/"
-METADATA_DIR="/fs9/gaspar/data/WP/metadata/"
-METADAT_JSON="/fs9/gaspar/data/WP/metadata.json"
+IMAGE_DIR="/home/wxy/dataset/WP/image/"
+METADATA_DIR="/home/wxy/dataset/WP/metadata/"
+METADAT_JSON="/home/wxy/dataset/WP/metadata.json"
 
 def get_simple_dataloader(args):
     dataset = DigitalTyphoonDataset(
@@ -173,25 +173,7 @@ def get_temporal_sequence_dataloader(args):
 
 
 def get_TS_dataloader(args):
-    # transforms = T.Compose([
-    #     T.ToTensor(),
-    #     FishEye(256, 0.2),
-    # ])
-
-    # def transform_func(obj, trans=transforms):
-    #     img_range = [150, 350]
-    #     img, labels = obj
-    #     img = img.clip(img_range[0], img_range[1])
-    #     img = (img - img_range[0])/(img_range[1]-img_range[0])
-
-    #     y, m, d, h = labels
-    #     label = datetime(year=y, month=m, day=d, hour=h)
-
-    #     return trans(img.astype(np.float32)), label
-
-    #TODO make these arguments
-    prefix = "/fs9/datasets/typhoon-202404/wnp"
-    #prefix = "/fs9/gaspar/data/WP"
+    prefix = "/home/wxy/dataset/WP"
 
     if "grade" in args.labels:
         def filter_func(x):
@@ -209,7 +191,7 @@ def get_TS_dataloader(args):
                 num_preds=args.num_outputs,
                 interval=args.interval,
                 filter_func=filter_func,
-                prefix = "/fs9/datasets/typhoon-202404/wnp",
+                prefix=prefix,
                 pred_diff=args.pred_diff,
                 )
 
@@ -249,6 +231,7 @@ def get_ImageTS_dataloader(args):
 
         return transforms(img.astype(np.float32))
 
+    prefix = "/home/wxy/dataset/WP"
 
     dataset = ImageSequenceTyphoonDataset(
                 labels=args.labels,#["month", "day", "hour", "pressure", "wind"],
@@ -257,7 +240,7 @@ def get_ImageTS_dataloader(args):
                 num_preds=args.num_outputs,
                 interval=args.interval,
                 filter_func= lambda x: x.grade() < 7,
-                prefix = "/fs9/datasets/typhoon-202404/wnp",
+                prefix=prefix,
                 transform=transform,
                 )
 
@@ -382,7 +365,8 @@ def get_moco_sequence_dataloader(args, **kwargs):
         img = torch.from_numpy(img).to(args.device).unsqueeze(0)
 
         return train_transforms(img)
-    prefix = "/fs9/datasets/typhoon-202404/wnp"
+    
+    prefix = "/home/wxy/dataset/WP"
 
     dataset = MoCoSequenceDataset(
         f"{prefix}/image/",
