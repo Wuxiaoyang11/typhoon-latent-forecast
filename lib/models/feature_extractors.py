@@ -69,6 +69,7 @@ def get_resnet18():
     model = resnet18(weights=ResNet18_Weights.IMAGENET1K_V1)
     # 将全连接层（fc）替换为一个恒等映射层，这样模型的输出就是卷积部分的特征图
     model.fc = nn.Identity()
+    # 包装模型以接受单通道输入
     return _wrap_model_1to3channels(model)
 
 
