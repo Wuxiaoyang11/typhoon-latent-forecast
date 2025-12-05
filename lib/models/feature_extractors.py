@@ -1,5 +1,5 @@
 import ssl
-
+"定义各种模型"
 import torch
 import torch.nn as nn
 from torchvision.models.resnet import (
@@ -79,22 +79,24 @@ def get_efficientnet_b0():
     # 因为 EfficientNet 第一层也需要 3 通道输入
     return _wrap_model_1to3channels(model)
 
-#使用MoCo
-# def get_moco_encoder(backbone: str, weights: str, dataparallel=False):
-#     model = SiameseEMA(
-#             base_encoder=get_feature_extractor(backbone),
-#             out_dim=384 if backbone == "vit_small" else 512,
-#     )
-#     if dataparallel:
-#         model = nn.DataParallel(model)
-#     model = _load_checkpoint(model, weights)    # 加载预训练权重
-#     if dataparallel:
-#         model = model.module.encoder_q[0]
-#     else:
-#         model = model.encoder_q[0]
-#     model.eval()
-#
-#     return model                                 # 返回用于提取特征的编码器
+"""
+使用MoCo
+def get_moco_encoder(backbone: str, weights: str, dataparallel=False):
+    model = SiameseEMA(
+            base_encoder=get_feature_extractor(backbone),
+            out_dim=384 if backbone == "vit_small" else 512,
+    )
+    if dataparallel:
+        model = nn.DataParallel(model)
+    model = _load_checkpoint(model, weights)    # 加载预训练权重
+    if dataparallel:
+        model = model.module.encoder_q[0]
+    else:
+        model = model.encoder_q[0]
+    model.eval()
+
+    return model                                # 返回用于提取特征的编码器
+    """
 
 #不使用MoCo
 def get_encoder(backbone: str, weights: str):
