@@ -42,6 +42,9 @@ class TimeSeriesTrainer(BaseTrainer):
         self.reg_criterion = nn.MSELoss()
         self.labels = args.labels
 
+        # === 新增这一行，修复报错 ===
+        self.num_latent = None
+
 
     def _run_train_epoch(self):
         self.model.train()

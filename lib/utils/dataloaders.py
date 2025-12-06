@@ -213,6 +213,9 @@ def get_TS_dataloader(args):
                 filter_func=filter_func,
                 prefix = "/home/wxy/dataset/WP",
                 pred_diff=args.pred_diff,
+
+                  # === 加上这一行 训练提速===
+                  load_data_into_memory=True
                 )
 
     # train, val = dataset.random_split([0.85, 0.15], split_by="sequence")
@@ -428,7 +431,7 @@ experiments = dict(
     simple=get_simple_dataloader,
     temporal=get_temporal_sequence_dataloader,
     ts=get_TS_dataloader,
-    image_ts=get_ImageTS_dataloader,
+    # image_ts=get_ImageTS_dataloader,
     moco=get_moco_dataloader,
     moco_sequence=get_moco_sequence_dataloader,
 )
