@@ -213,9 +213,6 @@ def get_TS_dataloader(args):
                 filter_func=filter_func,
                 prefix = "/home/wxy/dataset/WP",
                 pred_diff=args.pred_diff,
-
-                  # === 加上这一行 训练提速===
-                  load_data_into_memory=True
                 )
 
     # train, val = dataset.random_split([0.85, 0.15], split_by="sequence")
@@ -228,15 +225,24 @@ def get_TS_dataloader(args):
     train_loader = DataLoader(train,
                               batch_size=args.batch_size,
                               shuffle=True,
-                              num_workers=args.num_workers)
+                              num_workers=args.num_workers,
+                              #下面两行是训练加速用的
+                              pin_memory=True,
+                              persistent_workers=True)
     val_loader = DataLoader(val,
                             batch_size=args.batch_size,
                             shuffle=False,
-                            num_workers=args.num_workers)
+                            num_workers=args.num_workers,
+                            # 下面两行是训练加速用的
+                            pin_memory=True,
+                            persistent_workers=True)
     test_loader = DataLoader(test,
                             batch_size=args.batch_size,
                             shuffle=False,
-                            num_workers=args.num_workers)
+                            num_workers=args.num_workers,
+                             # 下面两行是训练加速用的
+                            pin_memory=True,
+                            persistent_workers=True)
 
     return train_loader, val_loader, test_loader
 
