@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader
 
 from lib.utils.dataset import (
     DatasetFromSubset,
-    ImageSequenceTyphoonDataset,
+    # ImageSequenceTyphoonDataset,
     MoCoSequenceDataset,
     NestedDigitalTyphoonDataset,
 )
@@ -238,7 +238,7 @@ def get_TS_dataloader(args):
     return train_loader, val_loader, test_loader
 
 #用途：端到端（End-to-End）的时间序列预测 这个函数用于直接从原始图片序列训练 LSTM，而不是从特征文件。
-def get_ImageTS_dataloader(args):
+"""def get_ImageTS_dataloader(args):
     transforms = T.Compose([
         T.ToTensor(),
         T.CenterCrop(224),
@@ -282,7 +282,7 @@ def get_ImageTS_dataloader(args):
                             shuffle=False,
                             num_workers=args.num_workers)
 
-    return train_loader, val_loader, test_loader
+    return train_loader, val_loader, test_loader"""
 
 
 
