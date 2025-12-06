@@ -20,6 +20,7 @@ IMAGE_DIR="/fs9/gaspar/data/WP/image/"
 METADATA_DIR="/fs9/gaspar/data/WP/metadata/"
 METADAT_JSON="/fs9/gaspar/data/WP/metadata.json"
 
+#基础的图像分类/回归训练 这个函数用于训练单个 CNN 模型（比如单纯训练一个 ResNet 来判断这张图是几级台风），而不涉及时间序列
 def get_simple_dataloader(args):
     dataset = DigitalTyphoonDataset(
         image_dir=IMAGE_DIR,
@@ -171,7 +172,7 @@ def get_temporal_sequence_dataloader(args):
 
     return train_loader, val_loader, test_loader
 
-
+#基于“预提取特征”的时间序列预测 这是你训练 LSTM（第二阶段）时调用的函数。（最重要）
 def get_TS_dataloader(args):
     # transforms = T.Compose([
     #     T.ToTensor(),
@@ -200,6 +201,7 @@ def get_TS_dataloader(args):
         def filter_func(x):
             return x.grade() < 6
 
+    #初始化 SequenceTyphoonDataset 类
     dataset = STD(labels=args.labels,#["month", "day", "hour", "pressure", "wind"],
                 preprocessed_path=args.preprocessed_path,
                 latent_dim=args.out_dim,
@@ -235,7 +237,7 @@ def get_TS_dataloader(args):
 
     return train_loader, val_loader, test_loader
 
-
+#用途：端到端（End-to-End）的时间序列预测 这个函数用于直接从原始图片序列训练 LSTM，而不是从特征文件。
 def get_ImageTS_dataloader(args):
     transforms = T.Compose([
         T.ToTensor(),
@@ -295,7 +297,7 @@ class TwoCropsTransform:
         q = self.base_transform(x)
         k = self.base_transform(x)
         return [q, k]
-
+#MoCo 自监督预训练（单图版）暂时忽略
 def get_moco_dataloader(args):
     dataset = DigitalTyphoonDataset(
         image_dir=IMAGE_DIR,
@@ -359,6 +361,7 @@ def get_moco_dataloader(args):
     return train_loader, val_loader, test_loader
 
 
+#用途：MoCo 自监督预训练（序列版）
 def get_moco_sequence_dataloader(args, **kwargs):
 
     train_transforms = nn.Sequential(

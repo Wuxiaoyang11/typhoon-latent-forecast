@@ -124,7 +124,7 @@ NORMALIZATION = dict(
     lat=[22.58, 10.6],
     lng=[136.2, 17.3],
 )
-
+#核心类
 class SequenceTyphoonDataset(DigitalTyphoonDataset):
     def __init__(self,
                  labels,
@@ -227,23 +227,28 @@ class SequenceTyphoonDataset(DigitalTyphoonDataset):
 
 
     def __getitem__(self, idx):
+        # 1. 获取第 idx 个台风序列
         seq = self.get_ith_sequence(idx)
         images = seq.get_all_images_in_sequence()
-
+        # 2. 获取元数据标签 (如气压)
         labels = torch.stack([self._labels_from_label_strs(image, self.labels) for image in images])
-
+        # 3. 加载预处理特征 (Feature Loading)
         if self.preprocessed_path is not None:
             npz = np.load(f"{self.preprocessed_path}/{seq.sequence_str}.npz")
             names_to_features = dict(zip(npz["arr_1"], npz["arr_0"]))
             features = [names_to_features[str(img.image_filepath).split("/")[-1].split(".")[0]]
                         for img in images]
             features = torch.from_numpy(np.array(features))
-
+            # 4. 拼接 (Concatenation)
+            # 将 [气压, 风速] 和 [1280维图像特征] 拼在一起
+            # 这样 LSTM 的输入就是：既有物理量，又有图像特征
             labels = torch.cat((labels, features), dim=1)
 
         if self.output_all:
             return labels, seq.sequence_str
 
+        # 5. 随机切片 (Random Slicing)
+        # 随机选一个起始点，切出一段输入 (lab_inputs) 和一段目标 (lab_preds)
         start_idx = np.random.randint(0, seq.get_num_images()-(self.num_inputs + self.num_preds)*self.interval)
         lab_inputs = labels[self.slice_inputs(start_idx), self.x]
         lab_preds = labels[self.slice_outputs(start_idx), self.y]
