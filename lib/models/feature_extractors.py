@@ -1,5 +1,5 @@
 import ssl
-"定义各种模型"
+"定义各种神经网络模型"
 import torch
 import torch.nn as nn
 from torchvision.models.resnet import (
