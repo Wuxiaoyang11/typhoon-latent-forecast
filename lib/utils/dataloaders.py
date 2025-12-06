@@ -16,9 +16,9 @@ from lib.utils.dataset import (
 from lib.utils.dataset import SequenceTyphoonDataset as STD
 from lib.utils.fisheye import FishEye
 
-IMAGE_DIR="/fs9/gaspar/data/WP/image/"
-METADATA_DIR="/fs9/gaspar/data/WP/metadata/"
-METADAT_JSON="/fs9/gaspar/data/WP/metadata.json"
+IMAGE_DIR="/home/wxy/dataset/WP/image/"
+METADATA_DIR="/home/wxy/dataset/WP/metadata/"
+METADAT_JSON="/home/wxy/dataset/WP/metadata.json"
 
 #基础的图像分类/回归训练 这个函数用于训练单个 CNN 模型（比如单纯训练一个 ResNet 来判断这张图是几级台风），而不涉及时间序列
 def get_simple_dataloader(args):
@@ -211,7 +211,7 @@ def get_TS_dataloader(args):
                 num_preds=args.num_outputs,
                 interval=args.interval,
                 filter_func=filter_func,
-                prefix = "/fs9/datasets/typhoon-202404/wnp",
+                prefix = "/home/wxy/dataset/WP",
                 pred_diff=args.pred_diff,
                 )
 

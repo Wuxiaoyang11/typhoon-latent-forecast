@@ -68,7 +68,7 @@ def main():
 
     # === 4. 配置路径并执行 ===
     # 请修改为您实际的数据集路径
-    dataset_path = "/fs9/datasets/typhoon-202404/wnp"
+    dataset_path = "/home/wxy/dataset/WP"
 
     # 输出目录名 (建议重命名以区分原版 ResNet)
     output_dir = "efficientnet_b0_imagenet_features"
