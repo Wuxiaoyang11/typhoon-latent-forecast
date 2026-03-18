@@ -13,6 +13,7 @@ from torchvision.models.vgg import VGG11_BN_Weights, vgg11_bn
 
 from lib.models.networks.simple_cnn import SimpleCNN
 from lib.models.networks.vision_transformer import vit_base, vit_small, vit_tiny
+from lib.models.networks.vision_mamba import vim_tiny, vim_small, vim_base
 from lib.models.siamese_ema import SiameseEMA
 
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -96,6 +97,9 @@ _feature_extractors = dict(
     vit_tiny=vit_tiny,
     vit_small=vit_small,
     vit_base=vit_base,
+    vim_tiny=vim_tiny,
+    vim_small=vim_small,
+    vim_base=vim_base,
     resnet18=get_resnet18,
     resnet18_3c=get_resnet18_3channels,
     resnet34=get_resnet34,
